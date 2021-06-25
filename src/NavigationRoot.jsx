@@ -13,7 +13,7 @@ const NavigationRoot = () => (
             <MainStack.Screen
                 name="Pinmark"
                 component={Bookmarks}
-                options={{
+                options={({ navigation }) => ({
                     headerRight: () => (
                         <Button
                             title="Settings"
@@ -21,8 +21,9 @@ const NavigationRoot = () => (
                             type="clear"
                         />
                     )
-                }}
+                })}
             />
+
             <MainStack.Screen
                 name="Settings"
                 component={Settings}

@@ -1,21 +1,34 @@
 import React from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Card } from 'react-native-elements';
-import * as WebBrowser from 'expo-web-browser';
+import { openBrowserAsync } from 'expo-web-browser';
+
+const styles = StyleSheet.create({
+    card: {
+        alignItems: 'stretch'
+    },
+    cardTitle: {
+        textAlign: 'left'
+    },
+    cardBody: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    }
+});
 
 const BookmarkListItem = ({ item }) => {
     const handlePress = async () => {
-        await WebBrowser.openBrowserAsync(item.url);
+        await openBrowserAsync(item.url);
     };
 
     return (
         <Pressable onPress={handlePress}>
-            <Card>
-                <Card.Title h4 style={{ textAlign: 'left' }}>
+            <Card styles={styles.card}>
+                <Card.Title h4 style={styles.cardTitle}>
                     {item.title}
                 </Card.Title>
 
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={styles.cardBody}>
                     <Text>
                         {item.isUnread ? 'Unread' : 'Read'}
                     </Text>

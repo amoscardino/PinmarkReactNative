@@ -1,7 +1,27 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Input, Button, Text } from 'react-native-elements';
 import useAuthToken from '../hooks/useAuthToken';
+
+const styles = StyleSheet.create({
+    view: {
+        paddingVertical: 16,
+        paddingHorizontal: 16,
+    },
+    input: {
+        paddingHorizontal: 0,
+    },
+    buttonRow: {
+        paddingVertical: 0,
+        paddingHorizontal: 8,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
+    },
+    button: {
+        paddingHorizontal: 8,
+        flexGrow: 1
+    }
+});
 
 const Settings = ({ navigation }) => {
     const [authToken, { updateAuthToken }] = useAuthToken();
@@ -18,29 +38,27 @@ const Settings = ({ navigation }) => {
 
     return (
         <SafeAreaView>
-            <View style={{ padding: 16 }}>
+            <View style={styles.view}>
                 <Text h1>
                     Settings
                 </Text>
             </View>
 
-            <View style={{ padding: 16 }}>
-                <Text>
-                    Pinboard Auth Token
-                </Text>
-
+            <View style={styles.view}>
                 <Input
                     defaultValue={authToken}
                     onChangeText={value => setToken(value)}
                     autoCompleteType="off"
                     autoCorrect={false}
                     autoCapitalize="none"
+                    label="Auth Token?"
+                    containerStyle={styles.input}
                 />
             </View>
 
-            <View style={{ padding: 16, display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                <Button title="Close" onPress={handleClose} type="outline" style={{ flexGrow: 1 }} />
-                <Button title="Save" onPress={handleSave} style={{ flexGrow: 1 }} />
+            <View style={[styles.view, styles.buttonRow]}>
+                <Button title="Close" onPress={handleClose} type="outline" containerStyle={styles.button} />
+                <Button title="Save" onPress={handleSave} containerStyle={styles.button} />
             </View>
         </SafeAreaView>
     );
