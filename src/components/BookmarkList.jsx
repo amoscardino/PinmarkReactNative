@@ -1,14 +1,12 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import { BOOKMARKS_STATUS } from '../hooks/useBookmarks';
 import BookmarkListItem from './BookmarkListItem';
 import Loader from './Loader';
 import Error from './Error';
 
 const BookmarkList = ({ status, error, bookmarks }) => {
-
     switch (status) {
-        case BOOKMARKS_STATUS.loaded:
+        case 'success':
             return (
                 <FlatList
                     data={bookmarks}
@@ -17,15 +15,15 @@ const BookmarkList = ({ status, error, bookmarks }) => {
                 />
             );
 
-        case BOOKMARKS_STATUS.loading:
+        case 'loading':
             return <Loader />;
 
-        case BOOKMARKS_STATUS.notLoaded:
-        default:
-            if (!error)
-                return null;
+        case 'error':
+            return <Error error={error?.message} />;
 
-            return <Error error={error} />;
+        default:
+            return null;
     }
 }
+
 export default BookmarkList;

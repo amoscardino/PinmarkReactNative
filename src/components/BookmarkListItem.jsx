@@ -1,20 +1,26 @@
 import React from 'react';
-import { View, Text, Pressable, StyleSheet } from 'react-native';
-import { Card } from 'react-native-elements';
+import { Pressable, StyleSheet } from 'react-native';
 import { openBrowserAsync } from 'expo-web-browser';
+import { ListItem, Icon } from 'react-native-elements';
 
 const styles = StyleSheet.create({
-    card: {
-        alignItems: 'stretch'
+    listItemTitle: {
+        marginBottom: 6
     },
-    cardTitle: {
-        textAlign: 'left'
-    },
-    cardBody: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+    listItemSubtitle: {
+        color: 'gray'
     }
 });
+
+const BookmarkListItemIcon = ({ isUnread, isPublic }) => {
+    if (isUnread)
+        return <Icon name='glasses' type='ionicon' />;
+
+    if (isPublic)
+        return <Icon name='globe' type='ionicon' />;
+
+    return <Icon name='newspaper' type='ionicon' />;
+}
 
 const BookmarkListItem = ({ item }) => {
     const handlePress = async () => {
@@ -23,7 +29,23 @@ const BookmarkListItem = ({ item }) => {
 
     return (
         <Pressable onPress={handlePress}>
-            <Card styles={styles.card}>
+            <ListItem bottomDivider>
+                <BookmarkListItemIcon isUnread={item.isUnread} isPublic={item.isPublic} />
+
+                <ListItem.Content>
+                    <ListItem.Title style={styles.listItemTitle}>
+                        {item.title}
+                    </ListItem.Title>
+
+                    <ListItem.Subtitle style={styles.listItemSubtitle}>
+                        {item.dateSaved.toDateString()}
+                    </ListItem.Subtitle>
+                </ListItem.Content>
+
+                <ListItem.Chevron />
+            </ListItem>
+
+            {/* <Card styles={styles.card}>
                 <Card.Title h4 style={styles.cardTitle}>
                     {item.title}
                 </Card.Title>
@@ -37,7 +59,7 @@ const BookmarkListItem = ({ item }) => {
                         {item.isPublic ? 'Public' : 'Private'}
                     </Text>
                 </View>
-            </Card>
+            </Card> */}
         </Pressable>
     )
 };

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Input, Button, Text } from 'react-native-elements';
-import useAuthToken from '../hooks/useAuthToken';
+import { getAuthToken, saveAuthToken } from '../utils/authToken';
 
 const styles = StyleSheet.create({
     view: {
@@ -24,11 +24,20 @@ const styles = StyleSheet.create({
 });
 
 const Settings = ({ navigation }) => {
-    const [authToken, { updateAuthToken }] = useAuthToken();
-    const [token, setToken] = useState(authToken);
+    const [token, setToken] = useState('');
+
+    useEffect(() => {
+        const loadToken = async() => {
+            const authToken = await getAuthToken();
+
+            setToken(authToken);
+        };
+
+        loadToken();
+    }, []);
 
     const handleSave = async () => {
-        await updateAuthToken(token || '');
+        await saveAuthToken(token);
         navigation.goBack();
     };
 
@@ -46,12 +55,12 @@ const Settings = ({ navigation }) => {
 
             <View style={styles.view}>
                 <Input
-                    defaultValue={authToken}
+                    defaultValue={token}
                     onChangeText={value => setToken(value)}
                     autoCompleteType="off"
                     autoCorrect={false}
                     autoCapitalize="none"
-                    label="Auth Token?"
+                    label="Pinboard Auth Token"
                     containerStyle={styles.input}
                 />
             </View>

@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
+import { useQuery } from 'react-query';
 import BookmarkList from '../components/BookmarkList';
-import useBookmarks from '../hooks/useBookmarks';
+import { getBookmarks } from '../utils/pinboardApi';
 
 const Bookmarks = ({ navigation }) => {
-    const [bookmarks, status, error, { loadBookmarks }] = useBookmarks();
+    const { data: bookmarks, status, error, refetch } = useQuery('bookmarks', getBookmarks);
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', async () => {
-            await loadBookmarks();
-        });
+        const unsubscribe = navigation.addListener('focus', () => refetch());
 
         return unsubscribe;
     }, [navigation]);
