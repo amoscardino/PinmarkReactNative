@@ -44,22 +44,6 @@ const BookmarkListItem = ({ item }) => {
 
                 <ListItem.Chevron />
             </ListItem>
-
-            {/* <Card styles={styles.card}>
-                <Card.Title h4 style={styles.cardTitle}>
-                    {item.title}
-                </Card.Title>
-
-                <View style={styles.cardBody}>
-                    <Text>
-                        {item.isUnread ? 'Unread' : 'Read'}
-                    </Text>
-
-                    <Text>
-                        {item.isPublic ? 'Public' : 'Private'}
-                    </Text>
-                </View>
-            </Card> */}
         </Pressable>
     )
 };

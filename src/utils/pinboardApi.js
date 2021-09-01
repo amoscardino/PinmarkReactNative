@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAuthToken } from "../utils/authToken";
 
 export const getBookmarks = async () => {
@@ -8,9 +7,6 @@ export const getBookmarks = async () => {
         throw new Error("Missing pinboard auth token!");
 
     let pinboardUrl = `https://api.pinboard.in/v1/posts/recent?format=json&auth_token=${authToken}`;
-
-    // Uncomment this out to get around CORS issues when running in the browser
-    // pinboardUrl = `https://moscardino-cors.azurewebsites.net/api/proxy?url=${encodeURIComponent(pinboardUrl)}`
 
     const response = await fetch(pinboardUrl, {
         headers: {
